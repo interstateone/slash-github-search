@@ -14,7 +14,7 @@
   "author": "Brandon Evans",
   "license": "MIT",
   "dependencies": {
-    "botkit": "^0.6.13",
+    "botkit": "^0.7.1",
     "dotenv": "^4.0.0",
     "github": "^12.1.0"
   }
