@@ -14,7 +14,25 @@ const controller = Botkit.slackbot({
     json_file_store: __dirname + '/.data/db/'
 });
 
-controller.startTicking();
+// Begin workaround for https://github.com/howdyai/botkit/issues/590
+let bot = controller.spawn({
+    token: process.env.SLACK_BOT_TOKEN
+}).startRTM()
+
+bot.api.auth.test({}, (err, res) => {
+    controller.storage.teams.save({
+        id: res.team_id,
+        bot: {
+            user_id: res.user_id,
+            name: res.user
+        }
+    }, (err) => {
+        if (err) {
+            console.error(err)
+        }
+    })
+})
+// End workaround
 
 controller.setupWebserver(process.env.PORT || 9876, function (err, webserver) {
     controller.createWebhookEndpoints(controller.webserver);
