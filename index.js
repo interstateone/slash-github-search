@@ -72,7 +72,7 @@ controller.on('slash_command', function (slashCommand, message) {
             }
 
             slashCommand.replyPrivateDelayed(message, `🔎 Searching for "${message.text}"...`, function() {
-                github.search.code({ q: encodeURIComponent(message.text) + "+repo:RobotsAndPencils/RobotFood+in:file,path", per_page: 5 }, function (error, response) {
+                github.search.code({ q: message.text + "+repo:RobotsAndPencils/RobotFood+in:file,path", per_page: 5 }, function (error, response) {
                     const responseModel = (response.data.items || []).map(function(item) {
                         return {
                             name: item.name,
